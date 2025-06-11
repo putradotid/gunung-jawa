@@ -1,0 +1,23 @@
+/* src/assets/main.css */
+
+/* Definisikan variabel warna agar mudah diubah */
+:root {
+  --color-primary: #2d8659; /* Hijau tua */
+  --color-secondary: #f2f2f2;
+  --color-background: #fafafa;
+  --color-text: #2c3e50;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hilangkan style default */
+* {
+  box-sizing: border-box;
+}
