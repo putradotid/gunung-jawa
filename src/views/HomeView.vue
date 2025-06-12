@@ -9,7 +9,7 @@ const featuredMountains = ref([
     id: 1,
     name: 'Gunung Semeru',
     location: 'Jawa Timur',
-    image: 'https://images.unsplash.com/photo-1606231142279-b73a896d649d?q=80&w=1470&auto=format&fit=crop',
+    image: 'https://plus.unsplash.com/premium_photo-1697729935951-420138024919?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     temp: 10,
     status: 'Cerah, Aman Didaki'
   },
@@ -17,7 +17,7 @@ const featuredMountains = ref([
     id: 2,
     name: 'Gunung Merbabu',
     location: 'Jawa Tengah',
-    image: 'https://images.unsplash.com/photo-1596723381273-199b53a312da?q=80&w=1548&auto=format&fit=crop',
+    image: 'https://asset.kompas.com/crops/37yCLGqU2DiI7FGy_scDpnAlGzQ=/0x0:1500x1000/1200x800/data/photo/2020/08/14/5f3615920efd9.jpg',
     temp: 12,
     status: 'Berawan, Waspada Angin'
   },
@@ -25,7 +25,7 @@ const featuredMountains = ref([
     id: 3,
     name: 'Gunung Gede',
     location: 'Jawa Barat',
-    image: 'https://images.unsplash.com/photo-1588653258543-db3d4b68e590?q=80&w=1470&auto=format&fit=crop',
+    image: 'https://jnewsonline.com/wp-content/uploads/2025/01/gunung-gede.jpg',
     temp: 14,
     status: 'Cerah, Aman Didaki'
   }

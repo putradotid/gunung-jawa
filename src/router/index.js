@@ -20,6 +20,12 @@ const router = createRouter({
       component: MountainListView
     },
     {
+      path: '/gunung/:id', // :id adalah parameter dinamis
+      name: 'mountain-detail',
+      // Lazy load komponen agar lebih efisien
+      component: () => import('../views/MountainDetailView.vue') 
+    },
+    {
       path: '/peta',
       name: 'map',
       component: MapView
