@@ -6,10 +6,10 @@ import { ref } from 'vue';
 // Avatar menggunakan layanan gratis ui-avatars.com
 const teamMembers = ref([
   {
-    name: 'Adi Nugroho',
+    name: 'Apriliyanto Dwi S',
     role: 'Founder & Lead Developer',
     quote: '"Saya percaya teknologi bisa membuat petualangan di alam bebas menjadi lebih aman dan menyenangkan."',
-    avatar: 'https://ui-avatars.com/api/?name=Adi+Nugroho&background=2d8659&color=fff&size=128'
+    avatar: 'https://ui-avatars.com/api/?name=April+Dwi+S&background=2d8659&color=fff&size=128'
   },
   {
     name: 'Citra Lestari',
@@ -18,10 +18,10 @@ const teamMembers = ref([
     avatar: 'https://ui-avatars.com/api/?name=Citra+Lestari&background=495057&color=fff&size=128'
   },
   {
-    name: 'Budi Santoso',
+    name: 'Rivaldo Jeffmarvin',
     role: 'Data & Meteorologi Partner',
     quote: '"Data cuaca yang akurat adalah kunci keselamatan. Saya bangga bisa berkontribusi untuk itu."',
-    avatar: 'https://ui-avatars.com/api/?name=Budi+Santoso&background=2d8659&color=fff&size=128'
+    avatar: 'https://ui-avatars.com/api/?name=Rivaldo+Jeffmarvin&background=2d8659&color=fff&size=128'
   }
 ]);
 </script>
@@ -41,7 +41,7 @@ const teamMembers = ref([
       <div class="container">
         <div class="story-content">
           <div class="story-image">
-            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=1470&auto=format&fit=crop" alt="Tim pendaki sedang berdiskusi di gunung">
+            <img src="https://jelajah.kompas.id/wp-content/uploads/2020/09/Puncak-Everest-Mereka-Membanggakan-Bangsa....jpg" alt="Tim pendaki sedang berdiskusi di gunung">
           </div>
           <div class="story-text">
             <h2>Kisah Kami</h2>

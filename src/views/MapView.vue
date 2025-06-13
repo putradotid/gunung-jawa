@@ -1,65 +1,76 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import L from 'leaflet';
+// --- PERBAIKAN 1: (PALING PENTING) Impor CSS Leaflet ---
+import 'leaflet/dist/leaflet.css';
 
-// --- DATA GUNUNG (dengan Koordinat) ---
-// Saya telah menambahkan properti 'coords' [latitude, longitude] untuk setiap gunung.
-// Ini adalah data krusial untuk menempatkan pin di peta.
 const mountains = ref([
-  { id: 1, name: 'Merbabu', location: 'Jawa Tengah', status: 'Cerah', coords: [-7.4542, 110.4386], image: 'https://picsum.photos/seed/Merbabu/200/150' },
-  { id: 2, name: 'Pangrango', location: 'Jawa Barat', status: 'Aman Didaki', coords: [-6.7820, 106.9820], image: 'https://picsum.photos/seed/Pangrango/200/150' },
-  { id: 3, name: 'Gede', location: 'Jawa Barat', status: 'Aman Didaki', coords: [-6.7860, 106.9800], image: 'https://picsum.photos/seed/Gede/200/150' },
-  { id: 4, name: 'Patuha', location: 'Jawa Barat', status: 'Aman Dikunjungi', coords: [-7.1652, 107.4017], image: 'https://picsum.photos/seed/Patuha/200/150' },
-  { id: 5, name: 'Arjuno', location: 'Jawa Timur', status: 'Waspada Angin', coords: [-7.7569, 112.5855], image: 'https://picsum.photos/seed/Arjuno/200/150' },
-  { id: 6, name: 'Slamet', location: 'Jawa Tengah', status: 'Waspada', coords: [-7.2422, 109.2083], image: 'https://picsum.photos/seed/Slamet/200/150' },
-  { id: 7, name: 'Sindoro', location: 'Jawa Tengah', status: 'Cerah', coords: [-7.2956, 109.9950], image: 'https://picsum.photos/seed/Sindoro/200/150' },
-  { id: 8, name: 'Ciremai', location: 'Jawa Barat', status: 'Aman Didaki', coords: [-6.8922, 108.4014], image: 'https://picsum.photos/seed/Ciremai/200/150' },
-  { id: 9, name: 'Ijen', location: 'Jawa Timur', status: 'Aman, Waspada Gas', coords: [-8.0583, 114.2444], image: 'https://picsum.photos/seed/Ijen/200/150' },
-  { id: 10, name: 'Raung', location: 'Jawa Timur', status: 'Waspada, Level II', coords: [-8.1250, 114.0431], image: 'https://picsum.photos/seed/Raung/200/150' },
+    // ... data gunung Anda tidak berubah ...
+    { id: 1, name: 'Merbabu', location: 'Jawa Tengah', status: 'Cerah', coords: [-7.4542, 110.4386], image: 'https://asset.kompas.com/crops/37yCLGqU2DiI7FGy_scDpnAlGzQ=/0x0:1500x1000/1200x800/data/photo/2020/08/14/5f3615920efd9.jpg' },
+    { id: 2, name: 'Pangrango', location: 'Jawa Barat', status: 'Aman Didaki', coords: [-6.7820, 106.9820], image: 'https://img.inews.co.id/media/1200/files/inews_new/2023/05/05/fakta_gunung_gede_pangrango.jpg' },
+    { id: 3, name: 'Gede', location: 'Jawa Barat', status: 'Aman Didaki', coords: [-6.7860, 106.9800], image: 'https://jnewsonline.com/wp-content/uploads/2025/01/gunung-gede.jpg' },
+    { id: 4, name: 'Patuha', location: 'Jawa Barat', status: 'Aman Dikunjungi', coords: [-7.1652, 107.4017], image: 'https://pariwisataindonesia.id/wp-content/uploads/2021/12/gunung_patuha.jpg' },
+    { id: 5, name: 'Arjuno', location: 'Jawa Timur', status: 'Waspada Angin', coords: [-7.7569, 112.5855], image: 'https://backpackerjakarta.com/wp-content/uploads/2018/02/gunung-arjuno-di-malang.jpg' },
+    { id: 6, name: 'Slamet', location: 'Jawa Tengah', status: 'Waspada', coords: [-7.2422, 109.2083], image: 'https://img.inews.co.id/media/1200/files/inews_new/2023/10/22/puncak_gunung_slamet.jpg' },
+    { id: 7, name: 'Sindoro', location: 'Jawa Tengah', status: 'Cerah', coords: [-7.2956, 109.9950], image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijxOZeBrmsgh2gd16gIcC6naWzYEpaa2hUHxi0AUdvrNTKdkwhtMbkpvel5WJzXkRI0Xq14Y9VDfYlYSaP5DUBf2DkjruK5GCfTXkCe41H3gktBh-Jr3dq4kCUJirdwAplPNaEYhdzw7vW/s1600/sindoro+%25281%2529.jpg' },
+    { id: 8, name: 'Ciremai', location: 'Jawa Barat', status: 'Aman Didaki', coords: [-6.8922, 108.4014], image: 'https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/251/2024/10/04/IMG_7313-599703419.jpg' },
+    { id: 9, name: 'Ijen', location: 'Jawa Timur', status: 'Aman, Waspada Gas', coords: [-8.0583, 114.2444], image: 'https://asset.kompas.com/crops/fu2SL2EKEzm5evOAXDv-SyvvD9Y=/0x0:1200x800/1200x800/data/photo/2021/08/19/611e162fed8b4.jpg' },
+    { id: 10, name: 'Raung', location: 'Jawa Timur', status: 'Waspada, Level II', coords: [-8.1250, 114.0431], image: 'https://shelterjelajah.com/wp-content/uploads/2024/08/Tips-Mendaki-Gunung-Raung.jpeg' },
 ]);
 
-let map = null; // Variabel untuk menyimpan instance peta
+let map = null;
+// --- PERBAIKAN 2: Simpan referensi marker untuk membuka popup ---
+const markers = {};
+// --- PERBAIKAN 3: State untuk melacak item yang aktif di daftar ---
+const selectedMountainId = ref(null);
 
-// --- Fungsi untuk Inisialisasi Peta ---
 onMounted(() => {
-  // Inisialisasi peta dan pusatkan di Pulau Jawa
   map = L.map('mapContainer').setView([-7.6, 110.5], 7);
 
-  // Menambahkan 'tile layer' dari OpenStreetMap (peta dasar)
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // Menambahkan pin/marker untuk setiap gunung
   mountains.value.forEach(mountain => {
     const marker = L.marker(mountain.coords).addTo(map);
     
-    // Membuat konten popup yang akan muncul saat pin diklik
     marker.bindPopup(`
       <div class="map-popup">
         <img src="${mountain.image}" alt="${mountain.name}" class="popup-image">
         <h4>${mountain.name}</h4>
         <p>${mountain.location}</p>
         <p><strong>Status:</strong> ${mountain.status}</p>
-        <a href="/gunung/${mountain.id}" class="popup-link">Lihat Detail</a>
+        <a href="/gunung/${mountain.id}" class="popup-link" target="_blank">Lihat Detail</a>
       </div>
     `);
+    
+    // Simpan marker dengan key id gunungnya
+    markers[mountain.id] = marker;
   });
 });
 
-// Membersihkan map saat komponen dihancurkan untuk mencegah memory leak
 onUnmounted(() => {
   if (map) {
     map.remove();
   }
 });
 
-// Fungsi untuk "terbang" ke lokasi gunung saat item di list diklik
-function flyToMountain(coords) {
-  map.flyTo(coords, 11, { // Zoom level 11
+// --- PERBAIKAN 4: Modifikasi fungsi agar lebih interaktif ---
+function selectMountain(mountain) {
+  // Atur ID gunung yang dipilih
+  selectedMountainId.value = mountain.id;
+  
+  // "Terbang" ke lokasi
+  map.flyTo(mountain.coords, 11, {
     animate: true,
     duration: 1.5
   });
+  
+  // Buka popup yang sesuai di peta
+  const marker = markers[mountain.id];
+  if (marker) {
+    marker.openPopup();
+  }
 }
 </script>
 
@@ -71,7 +82,11 @@ function flyToMountain(coords) {
         <p>Klik nama gunung untuk melihat lokasinya di peta.</p>
       </div>
       <ul class="mountain-list">
-        <li v-for="mountain in mountains" :key="mountain.id" @click="flyToMountain(mountain.coords)">
+        <li 
+          v-for="mountain in mountains" 
+          :key="mountain.id" 
+          @click="selectMountain(mountain)"
+          :class="{ active: mountain.id === selectedMountainId }">
           <div class="list-item-content">
             <strong>{{ mountain.name }}</strong>
             <span>{{ mountain.location }}</span>
@@ -80,39 +95,46 @@ function flyToMountain(coords) {
       </ul>
     </aside>
 
-    <main class="map-container">
+    <main class="map-container-wrapper">
       <div id="mapContainer"></div>
     </main>
   </div>
 </template>
 
 <style scoped>
-/* PENTING: Peta harus punya tinggi yang definitif */
 #mapContainer {
   height: 100%;
   width: 100%;
   border-radius: 15px;
-  z-index: 1; /* Agar peta tetap di bawah elemen lain jika ada tumpang tindih */
+  z-index: 1;
 }
 
 .map-view-layout {
   display: grid;
-  grid-template-columns: 350px 1fr; /* Kolom kiri 350px, sisanya untuk peta */
-  height: calc(100vh - 80px); /* Tinggi penuh dikurangi tinggi navbar */
-  overflow: hidden; /* Mencegah scrolling halaman utama */
+  grid-template-columns: 350px 1fr;
+  /* --- PERBAIKAN 6: Tambahkan gap untuk spasi antar kolom --- */
+  gap: 1.5rem;
+  /* --- PERBAIKAN 7: Pindahkan padding ke layout utama agar lebih konsisten --- */
+  padding: 1.5rem;
+  height: calc(100vh - 70px); /* Sesuaikan 70px dengan tinggi header/navbar Anda */
+  box-sizing: border-box; /* Pastikan padding tidak menambah ukuran */
 }
 
-/* Styling untuk Sidebar Kiri */
+/* --- PERBAIKAN 8: KUNCI UTAMA untuk masalah 'tenggelam' --- */
 .mountain-sidebar {
-  background-color: #f8f9fa;
+  background-color: white; /* Ubah agar lebih menonjol */
+  border-radius: 15px; /* Samakan dengan peta */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Beri sedikit shadow */
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden; /* INI YANG PALING PENTING: Paksa konten untuk tidak keluar dari box */
 }
 
 .sidebar-header {
   padding: 1.5rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e9ecef;
+  flex-shrink: 0; /* Pastikan header tidak ikut menyusut */
 }
 
 .sidebar-header h2 {
@@ -129,8 +151,8 @@ function flyToMountain(coords) {
   list-style: none;
   padding: 0;
   margin: 0;
-  overflow-y: auto; /* Membuat list bisa di-scroll jika panjang */
-  flex-grow: 1;
+  overflow-y: auto; /* Scrollbar akan muncul di sini jika list panjang */
+  flex-grow: 1; /* Biarkan list ini mengisi sisa ruang yang ada */
 }
 
 .mountain-list li {
@@ -140,9 +162,15 @@ function flyToMountain(coords) {
   transition: background-color 0.2s ease;
 }
 
-.mountain-list li:hover {
-  background-color: #e9ecef;
+/* --- PERBAIKAN 9: Style untuk item yang aktif --- */
+.mountain-list li.active, .mountain-list li:hover {
+  background-color: #e6f3ee; /* Warna hijau lembut, sesuaikan dengan var(--color-primary) */
+  color: var(--color-primary);
 }
+.mountain-list li.active strong {
+    color: var(--color-primary);
+}
+
 
 .list-item-content {
   display: flex;
@@ -152,6 +180,7 @@ function flyToMountain(coords) {
 
 .list-item-content strong {
   font-size: 1.1rem;
+  transition: color 0.2s ease;
 }
 
 .list-item-content span {
@@ -159,16 +188,19 @@ function flyToMountain(coords) {
   color: #6c757d;
 }
 
-/* Styling untuk Kontainer Peta Kanan */
-.map-container {
-  padding: 1.5rem;
-  background-color: #e9ecef;
+/* --- PERBAIKAN 10: Ubah nama class agar tidak bentrok dengan id element --- */
+.map-container-wrapper {
+  background-color: white; /* Samakan dengan sidebar */
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 0; /* Padding tidak dibutuhkan lagi di sini */
 }
 
-/* Styling untuk Custom Popup di Peta */
-/* Kita perlu menggunakan selector global, karena popup dirender di luar scope komponen */
+
+/* Styling untuk Custom Popup di Peta (sudah bagus, tidak perlu diubah) */
 :global(.map-popup) {
   text-align: center;
+  width: 180px;
 }
 :global(.map-popup .popup-image) {
   width: 100%;
