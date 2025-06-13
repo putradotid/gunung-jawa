@@ -5,8 +5,33 @@ import { RouterLink } from 'vue-router';
 // Definisikan API Key Anda di satu tempat
 const apiKey = '6203054842e25d37aa7f9c44b7098fc7';
 
+// --- FUNGSI BARU UNTUK MENERJEMAHKAN STATUS CUACA ---
+function translateWeatherDescription(description) {
+  const translations = {
+    'clear sky': 'Langit Cerah',
+    'few clouds': 'Sedikit Berawan',
+    'scattered clouds': 'Berawan Sebagian',
+    'broken clouds': 'Berawan',
+    'overcast clouds': 'Sangat Berawan (Mendung)',
+    'shower rain': 'Hujan Gerimis',
+    'rain': 'Hujan',
+    'light rain': 'Hujan Ringan',
+    'moderate rain': 'Hujan Sedang',
+    'thunderstorm': 'Badai Petir',
+    'snow': 'Salju',
+    'mist': 'Berkabut',
+    'fog': 'Kabut Tebal',
+  };
+  // Kembalikan terjemahan jika ada, atau kembalikan teks asli dengan huruf kapital
+  return translations[description.toLowerCase()] || (description.charAt(0).toUpperCase() + description.slice(1));
+}
+
+// contoh get api di link bawah ini
+// https://api.openweathermap.org/data/2.5/weather?lat=-8.1072&lon=112.9223&appid=6203054842e25d37aa7f9c44b7098fc7&units=metric
+
 // --- MOCK DATA (Data Palsu) ---
 // Nanti, data ini akan Anda ambil dari API atau database Anda.
+
 const featuredMountains = ref([
   {
     id: 1,
@@ -16,7 +41,8 @@ const featuredMountains = ref([
     lat: -8.1072,
     lon: 112.9223,
     temp: "...",
-    status: 'Cerah, Aman Didaki'
+    status: 'Cerah, Aman Didaki',
+    icon: null
   },
   {
     id: 2,
@@ -26,7 +52,8 @@ const featuredMountains = ref([
     lat: -7.452422957882377,
     lon: 110.44041882494714,
     temp: "...",
-    status: 'Berawan, Waspada Angin'
+    status: 'Berawan, Waspada Angin',
+    icon: null
   },
   {
     id: 3,
@@ -36,7 +63,8 @@ const featuredMountains = ref([
     lat: -6.787308831022403,
     lon: 106.98198723263066,
     temp: "...",
-    status: 'Cerah, Aman Didaki'
+    status: 'Cerah, Aman Didaki',
+    icon: null
   }
 ]);
 
@@ -65,12 +93,14 @@ onMounted(() => {
       mountain.temp = Math.round(data.main.temp); 
       // Mengambil deskripsi cuaca dan menjadikannya huruf kapital di awal
       mountain.status = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
+      mountain.icon = data.weather[0].icon;
 
     } catch (error) {
       console.error(`Error fetching data for ${mountain.name}:`, error);
       // Jika error, tampilkan pesan di kartu
       mountain.temp = '-';
       mountain.status = 'Gagal Memuat';
+      mountain.icon = null;
     }
     return mountain;
   });
@@ -103,10 +133,18 @@ onMounted(() => {
               <h3>{{ mountain.name }}</h3>
               <p class="location">{{ mountain.location }}</p>
               <div class="weather-info">
-                <span>🌡️ {{ mountain.temp }}°C</span>
-                <span class="status" :class="{ 'status-aman': mountain.status.includes('Aman'), 'status-waspada': mountain.status.includes('Waspada') }">
-                  {{ mountain.status }}
-                </span>
+                <div class="temp-display">
+                  <span class="icon">🌡️</span>
+                  <span>{{ mountain.temp }}°C</span>
+                </div>
+                <div class="status-display">
+                  <img 
+                    v-if="mountain.icon" 
+                    :src="`https://openweathermap.org/img/wn/${mountain.icon}@2x.png`" 
+                    :alt="mountain.status" 
+                    class="weather-icon">
+                  <span class="status-text">{{ mountain.status }}</span>
+                </div>
               </div>
               <RouterLink :to="`/gunung/${mountain.id}`" class="details-button">Lihat Detail</RouterLink>
             </div>
@@ -239,27 +277,46 @@ onMounted(() => {
 }
 
 .weather-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  display: flex; /* Gunakan flexbox */
+  justify-content: space-between; /* Posisikan suhu dan status di ujung */
+  align-items: center; /* Sejajarkan secara vertikal */
+  background-color: #f8f9fa; /* Beri sedikit background */
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
   margin-bottom: 1.5rem;
+}
+
+.temp-display span {
+  font-size: 1.8rem; /* Perbesar ukuran suhu */
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.status-display {
+  display: flex;
+  flex-direction: column; /* Susun ikon dan teks secara vertikal */
+  align-items: center; /* Pusatkan ikon dan teks */
+  text-align: center;
+}
+
+.weather-icon {
+  width: 50px; /* Ukuran ikon */
+  height: 50px;
+  object-fit: contain;
+}
+
+.status-text {
   font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
 }
 
 .status {
   padding: 0.3rem 0.5rem;
   border-radius: 5px;
-  color: white;
+  color: #888;
   font-weight: 500;
   text-align: center;
-}
-
-.status-aman {
-  background-color: var(--color-primary); /* Hijau */
-}
-
-.status-waspada {
-  background-color: #f39c12; /* Oranye */
 }
 
 .details-button {
