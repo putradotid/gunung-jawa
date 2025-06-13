@@ -1,6 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
+
+// Definisikan API Key Anda di satu tempat
+const apiKey = '6203054842e25d37aa7f9c44b7098fc7';
 
 // --- MOCK DATA (Data Palsu) ---
 // Nanti, data ini akan Anda ambil dari API atau database Anda.
@@ -10,7 +13,9 @@ const featuredMountains = ref([
     name: 'Gunung Semeru',
     location: 'Jawa Timur',
     image: 'https://plus.unsplash.com/premium_photo-1697729935951-420138024919?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    temp: 10,
+    lat: -8.1072,
+    lon: 112.9223,
+    temp: "...",
     status: 'Cerah, Aman Didaki'
   },
   {
@@ -18,7 +23,9 @@ const featuredMountains = ref([
     name: 'Gunung Merbabu',
     location: 'Jawa Tengah',
     image: 'https://asset.kompas.com/crops/37yCLGqU2DiI7FGy_scDpnAlGzQ=/0x0:1500x1000/1200x800/data/photo/2020/08/14/5f3615920efd9.jpg',
-    temp: 12,
+    lat: -7.452422957882377,
+    lon: 110.44041882494714,
+    temp: "...",
     status: 'Berawan, Waspada Angin'
   },
   {
@@ -26,7 +33,9 @@ const featuredMountains = ref([
     name: 'Gunung Gede',
     location: 'Jawa Barat',
     image: 'https://jnewsonline.com/wp-content/uploads/2025/01/gunung-gede.jpg',
-    temp: 14,
+    lat: -6.787308831022403,
+    lon: 106.98198723263066,
+    temp: "...",
     status: 'Cerah, Aman Didaki'
   }
 ]);
@@ -36,6 +45,41 @@ const latestArticles = ref([
   { id: 2, title: 'Tips Menghadapi Badai Hipotermia di Gunung', excerpt: 'Mengenali gejala dan cara penanganan yang tepat saat Anda atau rekan Anda mengalami hipotermia.' },
   { id: 3, title: 'Jalur Pendakian Favorit di Gunung Prau', excerpt: 'Pilih jalur yang paling sesuai dengan kemampuan dan nikmati pemandangan golden sunrise terbaik di Jawa Tengah.' }
 ]);
+
+// Gunakan onMounted untuk menjalankan fetch data saat komponen siap
+onMounted(() => {
+  // Loop melalui setiap gunung di dalam ref untuk mengambil datanya masing-masing
+  const fetchPromises = featuredMountains.value.map(async (mountain) => {
+    // Buat URL API yang dinamis untuk setiap gunung
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${mountain.lat}&lon=${mountain.lon}&appid=${apiKey}&units=metric`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error('Gagal mengambil data cuaca');
+      }
+      const data = await response.json();
+
+      // Perbarui nilai temp dan status untuk gunung yang sedang diproses
+      // Math.round() untuk membulatkan suhu
+      mountain.temp = Math.round(data.main.temp); 
+      // Mengambil deskripsi cuaca dan menjadikannya huruf kapital di awal
+      mountain.status = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
+
+    } catch (error) {
+      console.error(`Error fetching data for ${mountain.name}:`, error);
+      // Jika error, tampilkan pesan di kartu
+      mountain.temp = '-';
+      mountain.status = 'Gagal Memuat';
+    }
+    return mountain;
+  });
+
+  // Promise.all memastikan semua fetch selesai sebelum melanjutkan
+  // Meskipun tidak wajib di sini karena kita memodifikasi objek secara langsung,
+  // ini adalah praktik yang baik.
+  Promise.all(fetchPromises);
+});
 
 </script>
 
