@@ -109,36 +109,51 @@ function selectMountain(mountain) {
   z-index: 1;
 }
 
+/* --- PERBAIKAN RESPONSIVE --- */
 .map-view-layout {
   display: grid;
-  grid-template-columns: 350px 1fr;
-  /* --- PERBAIKAN 6: Tambahkan gap untuk spasi antar kolom --- */
-  gap: 1.5rem;
-  /* --- PERBAIKAN 7: Pindahkan padding ke layout utama agar lebih konsisten --- */
-  padding: 1.5rem;
+  padding: 1rem; /* Padding lebih kecil untuk mobile */
+  gap: 1rem;
   height: calc(100vh - 70px); /* Sesuaikan 70px dengan tinggi header/navbar Anda */
-  box-sizing: border-box; /* Pastikan padding tidak menambah ukuran */
+  box-sizing: border-box;
+
+  /* --- 1. GAYA DEFAULT (MOBILE FIRST): Satu Kolom --- */
+  /* Sidebar di atas (45% tinggi), Peta di bawah (sisanya) */
+  grid-template-columns: 1fr;
+  grid-template-rows: 45vh 1fr; 
 }
 
-/* --- PERBAIKAN 8: KUNCI UTAMA untuk masalah 'tenggelam' --- */
+/* --- 2. MEDIA QUERY: Terapkan gaya ini hanya untuk layar lebar --- */
+@media (min-width: 992px) {
+  .map-view-layout {
+    /* Kembalikan ke layout 2 kolom untuk desktop */
+    grid-template-columns: 350px 1fr;
+    grid-template-rows: 1fr; /* Reset ke satu baris */
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+/* --- AKHIR DARI PERBAIKAN RESPONSIVE --- */
+
+
 .mountain-sidebar {
-  background-color: white; /* Ubah agar lebih menonjol */
-  border-radius: 15px; /* Samakan dengan peta */
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Beri sedikit shadow */
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden; /* INI YANG PALING PENTING: Paksa konten untuk tidak keluar dari box */
+  overflow: hidden; /* Ini tetap penting untuk scrolling internal */
 }
 
 .sidebar-header {
-  padding: 1.5rem;
+  padding: 1rem 1.5rem; /* Sedikit rampingkan padding vertikal */
   border-bottom: 1px solid #e9ecef;
-  flex-shrink: 0; /* Pastikan header tidak ikut menyusut */
+  flex-shrink: 0;
 }
 
 .sidebar-header h2 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.25rem 0; /* Kurangi margin bawah */
 }
 
 .sidebar-header p {
@@ -151,20 +166,19 @@ function selectMountain(mountain) {
   list-style: none;
   padding: 0;
   margin: 0;
-  overflow-y: auto; /* Scrollbar akan muncul di sini jika list panjang */
-  flex-grow: 1; /* Biarkan list ini mengisi sisa ruang yang ada */
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 .mountain-list li {
-  padding: 1.2rem 1.5rem;
+  padding: 1rem 1.5rem; /* Sedikit rampingkan padding vertikal */
   border-bottom: 1px solid #e9ecef;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-/* --- PERBAIKAN 9: Style untuk item yang aktif --- */
 .mountain-list li.active, .mountain-list li:hover {
-  background-color: #e6f3ee; /* Warna hijau lembut, sesuaikan dengan var(--color-primary) */
+  background-color: #e6f3ee;
   color: var(--color-primary);
 }
 .mountain-list li.active strong {
@@ -188,16 +202,17 @@ function selectMountain(mountain) {
   color: #6c757d;
 }
 
-/* --- PERBAIKAN 10: Ubah nama class agar tidak bentrok dengan id element --- */
 .map-container-wrapper {
-  background-color: white; /* Samakan dengan sidebar */
+  background-color: white;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  padding: 0; /* Padding tidak dibutuhkan lagi di sini */
+  padding: 0;
+  /* Perlu untuk memastikan grid di mobile tidak 'pecah' */
+  min-height: 0; 
 }
 
 
-/* Styling untuk Custom Popup di Peta (sudah bagus, tidak perlu diubah) */
+/* Styling untuk Custom Popup di Peta (tidak berubah) */
 :global(.map-popup) {
   text-align: center;
   width: 180px;

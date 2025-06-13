@@ -97,7 +97,7 @@ const latestArticles = ref([
   align-items: center;
   text-align: center;
   color: white;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1470&auto=format&fit=crop');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1602154663343-89fe0bf541ab?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnQlMjBicm9tb3xlbnwwfHwwfHx8MA%3D%3D');
   background-size: cover;
   background-position: center;
 }
