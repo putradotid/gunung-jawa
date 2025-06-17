@@ -40,7 +40,7 @@ onMounted(() => {
         <h4>${mountain.name}</h4>
         <p>${mountain.location}</p>
         <p><strong>Status:</strong> ${mountain.status}</p>
-        <a href="/gunung/${mountain.id}" class="popup-link" target="_blank">Lihat Detail</a>
+        <a href="/gunung/${mountain.id}" class="popup-link">Lihat Detail</a>
       </div>
     `);
     
