@@ -12,7 +12,7 @@ function translateWeatherDescription(description) {
     'few clouds': 'Sedikit Berawan',
     'scattered clouds': 'Berawan Sebagian',
     'broken clouds': 'Berawan',
-    'overcast clouds': 'Sangat Berawan (Mendung)',
+    'overcast clouds': 'Sangat Berawan',
     'shower rain': 'Hujan Gerimis',
     'rain': 'Hujan',
     'light rain': 'Hujan Ringan',
@@ -41,7 +41,7 @@ const featuredMountains = ref([
     lat: -8.1072,
     lon: 112.9223,
     temp: "...",
-    status: 'Cerah, Aman Didaki',
+    status: '...',
     icon: null
   },
   {
@@ -52,7 +52,7 @@ const featuredMountains = ref([
     lat: -7.452422957882377,
     lon: 110.44041882494714,
     temp: "...",
-    status: 'Berawan, Waspada Angin',
+    status: '...',
     icon: null
   },
   {
@@ -63,7 +63,7 @@ const featuredMountains = ref([
     lat: -6.787308831022403,
     lon: 106.98198723263066,
     temp: "...",
-    status: 'Cerah, Aman Didaki',
+    status: '...',
     icon: null
   }
 ]);
@@ -88,11 +88,16 @@ onMounted(() => {
       }
       const data = await response.json();
 
+      
       // Perbarui nilai temp dan status untuk gunung yang sedang diproses
       // Math.round() untuk membulatkan suhu
       mountain.temp = Math.round(data.main.temp); 
+
       // Mengambil deskripsi cuaca dan menjadikannya huruf kapital di awal
-      mountain.status = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
+      mountain.status = translateWeatherDescription(data.weather?.[0]?.description ?? '');
+      // versi inggris
+      // mountain.status = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
+      
       mountain.icon = data.weather[0].icon;
 
     } catch (error) {
