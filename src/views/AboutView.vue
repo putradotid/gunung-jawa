@@ -269,4 +269,71 @@ section {
     border-color: var(--color-primary);
     transform: translateY(-5px);
 }
+
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  /* Our Story: tumpuk gambar & teks */
+  .story-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .story-text h2 {
+    font-size: 1.8rem;
+  }
+  .story-text p {
+    font-size: 0.95rem;
+  }
+
+  /* Value cards */
+  .value-card {
+    padding: 1.5rem;
+  }
+  .value-card h3 {
+    font-size: 1.2rem;
+  }
+  .icon-wrapper {
+    font-size: 2.2rem;
+  }
+
+  /* Team section */
+  .team-card {
+    padding: 1.5rem;
+  }
+  .member-name {
+    font-size: 1.2rem;
+  }
+  .member-role {
+    font-size: 0.95rem;
+  }
+  .member-quote {
+    font-size: 0.9rem;
+  }
+
+  /* Get in Touch */
+  .get-in-touch p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+  .social-links {
+    gap: 1rem;
+  }
+  .social-links a {
+    width: 40px;
+    height: 40px;
+  }
+}
+
 </style>

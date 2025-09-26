@@ -189,6 +189,13 @@ onMounted(() => {
   background-position: center;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    height: 50vh;
+    padding: 0 0.5rem;
+  }
+}
+
 .hero-content h1 {
   font-size: 3.5rem;
   font-weight: 700;

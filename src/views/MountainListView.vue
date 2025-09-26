@@ -191,9 +191,12 @@ onMounted(() => {
   background-color: #e9ecef;
   padding: 0.5rem;
   border-radius: 50px;
+  overflow-x: auto; /* scroll horizontal */
+  -webkit-overflow-scrolling: touch;
 }
 
 .location-filters button {
+  flex: 0 0 auto;
   border: none;
   background-color: transparent;
   color: #555;
@@ -314,4 +317,31 @@ onMounted(() => {
 .no-results h3 {
   font-size: 1.5rem;
 }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .header-section h1 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .filter-controls {
+    flex-direction: column; /* jadi kolom */
+    align-items: stretch;
+  }
+
+  .location-filters {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .search-input input {
+    width: 100%;
+  }
+}
+
 </style>

@@ -10,6 +10,9 @@ function search() {
     // Nanti di sini akan diisi logika pencarian sebenarnya
   }
 }
+
+const is_expanded = ref(false)
+
 </script>
 
 <template>
@@ -18,7 +21,13 @@ function search() {
       <div class="logo">
         <RouterLink to="/">🏔️ InfoGunung</RouterLink>
       </div>
-      <nav class="nav-links">
+
+      <button class="hamburger" @click="is_expanded = !is_expanded">
+        <span v-if="!is_expanded">☰</span>
+        <span v-else>✖</span>
+      </button>
+
+      <nav class="nav-links" :class="{ active: is_expanded}">
         <RouterLink to="/">Beranda</RouterLink>
         <RouterLink to="/gunung">Daftar Gunung</RouterLink>
         <RouterLink to="/peta">Peta Pendakian</RouterLink>
@@ -98,4 +107,39 @@ function search() {
   border-radius: 0 4px 4px 0;
   cursor: pointer;
 }
+
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: white;
+      gap: 1rem;
+      padding: 1rem;
+      display: none;
+    }
+
+    .nav-links.active {
+      display: flex;
+    }
+
+    .hamburger {
+      display: block;
+    }
+
+    .search-bar {
+      display: none;
+    }
+  }
 </style>

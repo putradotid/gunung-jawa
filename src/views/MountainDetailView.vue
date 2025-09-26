@@ -187,14 +187,15 @@ onMounted(() => {
 
 .back-button {
   position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
+  top: 1rem;
+  left: 1rem;
   background-color: rgba(0,0,0,0.5);
   color: white;
-  padding: 0.75rem 1.25rem;
+  padding: 0.6rem 1rem;
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
+  font-size: 0.9rem;
   transition: background-color 0.3s;
 }
 
@@ -203,59 +204,96 @@ onMounted(() => {
 }
 
 .content-body {
-  padding: 2.5rem;
+  padding: 2rem;
 }
 
 .content-body h2 {
-  font-size: 1.75rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1.2rem;
   border-bottom: 2px solid var(--color-primary);
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
   display: inline-block;
 }
 
 .weather-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
 }
 
 .weather-item {
   background-color: #f8f9fa;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 10px;
   text-align: center;
 }
 
 .weather-item .icon {
-  font-size: 2.5rem;
+  font-size: 2rem;
   display: block;
 }
 
 .weather-item .label {
   display: block;
   color: #666;
-  margin: 0.5rem 0;
+  margin: 0.3rem 0;
 }
 
 .weather-item .value {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--color-text);
 }
 .weather-item .value.status {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .description-details p {
-  font-size: 1.1rem;
-  line-height: 1.8;
+  font-size: 1rem;
+  line-height: 1.6;
   color: #333;
 }
 
 .not-found {
   text-align: center;
-  padding: 4rem;
+  padding: 2rem;
+}
+
+/*  Tambahan khusus untuk mobile */
+@media (max-width: 768px) {
+  .image-header {
+    height: 250px;
+    padding: 1rem;
+  }
+
+  .image-header h1 {
+    font-size: 2rem;
+  }
+
+  .content-body {
+    padding: 1.5rem 1rem;
+  }
+
+  /* Ubah grid jadi fleksibel */
+  .weather-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.8rem;
+  }
+
+  .weather-item {
+    flex: 1;                /* supaya bagi rata */
+    padding: 0.8rem;
+  }
+
+  .weather-item .icon {
+    font-size: 1.5rem;
+  }
+
+  .weather-item .value {
+    font-size: 1rem;
+  }
 }
 </style>

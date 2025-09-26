@@ -322,4 +322,48 @@ function formatDate(dateString) {
   border-radius: 15px;
   margin-top: 2rem;
 }
+
+@media (max-width: 768px) {
+  .guides-header h1 {
+    font-size: 1.7rem;
+    padding: 0.5rem;
+  }
+  
+  .guides-header p {
+    font-size: 0.8rem;
+  }
+
+  .featured-content h2 {
+    font-size: 1.7rem;
+  }
+
+  .featured-content p {
+    font-size: 0.8rem;
+  }
+
+  .filter-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .category-filters {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .featured-article {
+    grid-template-columns: 1fr; /* tumpuk */
+    gap: 1.5rem;
+  }
+
+  .articles-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
 </style>
